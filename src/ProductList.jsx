@@ -274,7 +274,15 @@ function ProductList({ onHomeClick }) {
             count += itemQuantity;
         });
         return count;
-      };
+    };
+
+    const isProductInCart = (name) => {
+        const foundItem = cart.find(item => item.name === name);
+        if (foundItem) {
+            return true;
+        }
+        return false;
+    }
 
     return (
         <div>
@@ -308,7 +316,9 @@ function ProductList({ onHomeClick }) {
                                 <div className="product-title">{plant.name}</div>
                                 <div className="product-price">{plant.cost}</div>
                                 <div>{plant.description}</div>
-                                <button className="product-button" onClick={() => handleAddToCart(plant)}>Add to Cart</button>
+                                <button className={"product-button" + (isProductInCart(plant.name) ? " added-to-cart" : "")} onClick={() => isProductInCart(plant.name) ? null : handleAddToCart(plant)}>
+                                    { isProductInCart(plant.name) ? "Added to Cart" : "Add to Cart" }
+                                </button>
                             </div>
                             ))}
                         </div>
